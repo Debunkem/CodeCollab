@@ -1,23 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+// Import our pages
+import LandingPage from './pages/LandingPage';
+import AuthPage from './pages/AuthPage';
+import DashboardPage from './pages/DashboardPage';
+import RoomPage from './pages/RoomPage';
+import ProfileSetupPage from './pages/ProfileSetupPage';
+
+// Import your landing page
+
+
+// Import our route protector
+import ProtectedRoute from './components/common/ProtectedRoute';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    // Set a dark background for the whole app
+    <div className="min-h-screen bg-gray-900">
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+
+        {/* Protected Routes */}
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/room/:roomId" // :roomId is a dynamic parameter
+          element={
+            <ProtectedRoute>
+              <RoomPage />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/setup" 
+          element={
+            <ProtectedRoute>
+              <ProfileSetupPage />
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
     </div>
   );
 }
